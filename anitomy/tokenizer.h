@@ -15,29 +15,34 @@
 
 namespace anitomy {
 
-class Tokenizer {
-public:
-  Tokenizer(const string_t& filename, Elements& elements,
-            const Options& options, token_container_t& tokens);
+    class Tokenizer {
+    public:
+        Tokenizer(const string_t &filename, Elements &elements,
+                  const Options &options, token_container_t &tokens);
 
-  Tokenizer(const Tokenizer&) = delete;
-  Tokenizer& operator=(const Tokenizer&) = delete;
+        Tokenizer(const Tokenizer &) = delete;
 
-  bool Tokenize();
+        Tokenizer &operator=(const Tokenizer &) = delete;
 
-private:
-  void AddToken(TokenCategory category, bool enclosed, const TokenRange& range);
-  void TokenizeByBrackets();
-  void TokenizeByPreidentified(bool enclosed, const TokenRange& range);
-  void TokenizeByDelimiters(bool enclosed, const TokenRange& range);
+        bool Tokenize();
 
-  string_t GetDelimiters(const TokenRange& range) const;
-  void ValidateDelimiterTokens();
+    private:
+        void AddToken(TokenCategory category, bool enclosed, const TokenRange &range);
 
-  Elements& elements_;
-  const string_t& filename_;
-  const Options& options_;
-  token_container_t& tokens_;
-};
+        void TokenizeByBrackets();
+
+        void TokenizeByPreidentified(bool enclosed, const TokenRange &range);
+
+        void TokenizeByDelimiters(bool enclosed, const TokenRange &range);
+
+        string_t GetDelimiters(const TokenRange &range) const;
+
+        void ValidateDelimiterTokens();
+
+        Elements &elements_;
+        const string_t &filename_;
+        const Options &options_;
+        token_container_t &tokens_;
+    };
 
 }  // namespace anitomy

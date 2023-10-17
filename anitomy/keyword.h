@@ -17,43 +17,44 @@
 
 namespace anitomy {
 
-struct TokenRange;
+    struct TokenRange;
 
-struct KeywordOptions {
-  bool identifiable = true;
-  bool searchable = true;
-  bool valid = true;
-};
+    struct KeywordOptions {
+        bool identifiable = true;
+        bool searchable = true;
+        bool valid = true;
+    };
 
-struct Keyword {
-  ElementCategory category;
-  KeywordOptions options;
-};
+    struct Keyword {
+        ElementCategory category;
+        KeywordOptions options;
+    };
 
-class KeywordManager {
-public:
-  KeywordManager();
+    class KeywordManager {
+    public:
+        KeywordManager();
 
-  void Add(ElementCategory category, const KeywordOptions& options,
-           const std::initializer_list<string_t>& keywords);
+        void Add(ElementCategory category, const KeywordOptions &options,
+                 const std::initializer_list<string_t> &keywords);
 
-  bool Find(ElementCategory category, const string_t& str) const;
-  bool Find(const string_t& str, ElementCategory& category, KeywordOptions& options) const;
+        bool Find(ElementCategory category, const string_t &str) const;
 
-  void Peek(const string_t& filename, const TokenRange& range, Elements& elements,
-            std::vector<TokenRange>& preidentified_tokens) const;
+        bool Find(const string_t &str, ElementCategory &category, KeywordOptions &options) const;
 
-  string_t Normalize(const string_t& str) const;
+        void Peek(const string_t &filename, const TokenRange &range, Elements &elements,
+                  std::vector<TokenRange> &preidentified_tokens) const;
 
-private:
-  using keyword_container_t = std::map<string_t, Keyword>;
+        string_t Normalize(const string_t &str) const;
 
-  keyword_container_t& GetKeywordContainer(ElementCategory category) const;
+    private:
+        using keyword_container_t = std::map<string_t, Keyword>;
 
-  keyword_container_t file_extensions_;
-  keyword_container_t keys_;
-};
+        keyword_container_t &GetKeywordContainer(ElementCategory category) const;
 
-extern KeywordManager keyword_manager;
+        keyword_container_t file_extensions_;
+        keyword_container_t keys_;
+    };
+
+    extern KeywordManager keyword_manager;
 
 }  // namespace anitomy

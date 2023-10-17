@@ -15,84 +15,117 @@
 
 namespace anitomy {
 
-class Parser {
-public:
-  Parser(Elements& elements, const Options& options, token_container_t& tokens);
+    class Parser {
+    public:
+        Parser(Elements &elements, const Options &options, token_container_t &tokens);
 
-  Parser(const Parser&) = delete;
-  Parser& operator=(const Parser&) = delete;
+        Parser(const Parser &) = delete;
 
-  bool Parse();
+        Parser &operator=(const Parser &) = delete;
 
-private:
-  void SearchForKeywords();
-  void SearchForEpisodeNumber();
-  void SearchForAnimeTitle();
-  void SearchForReleaseGroup();
-  void SearchForEpisodeTitle();
-  void SearchForIsolatedNumbers();
-  void ValidateElements();
+        bool Parse();
 
-  bool SearchForEpisodePatterns(std::vector<size_t>& tokens);
-  bool SearchForEquivalentNumbers(std::vector<size_t>& tokens);
-  bool SearchForIsolatedNumbers(std::vector<size_t>& tokens);
-  bool SearchForSeparatedNumbers(std::vector<size_t>& tokens);
-  bool SearchForLastNumber(std::vector<size_t>& tokens);
+    private:
+        void SearchForKeywords();
 
-  bool NumberComesAfterPrefix(ElementCategory category, Token& token);
-  bool NumberComesBeforeAnotherNumber(const token_iterator_t token);
+        void SearchForEpisodeNumber();
 
-  bool MatchEpisodePatterns(string_t word, Token& token);
-  bool MatchSingleEpisodePattern(const string_t& word, Token& token);
-  bool MatchMultiEpisodePattern(const string_t& word, Token& token);
-  bool MatchSeasonAndEpisodePattern(const string_t& word, Token& token);
-  bool MatchTypeAndEpisodePattern(const string_t& word, Token& token);
-  bool MatchFractionalEpisodePattern(const string_t& word, Token& token);
-  bool MatchPartialEpisodePattern(const string_t& word, Token& token);
-  bool MatchNumberSignPattern(const string_t& word, Token& token);
-  bool MatchJapaneseCounterPattern(const string_t& word, Token& token);
+        void SearchForAnimeTitle();
 
-  bool MatchVolumePatterns(string_t word, Token& token);
-  bool MatchSingleVolumePattern(const string_t& word, Token& token);
-  bool MatchMultiVolumePattern(const string_t& word, Token& token);
+        void SearchForReleaseGroup();
 
-  bool IsValidEpisodeNumber(const string_t& number);
-  bool SetEpisodeNumber(const string_t& number, Token& token, bool validate);
-  bool SetAlternativeEpisodeNumber(const string_t& number, Token& token);
+        void SearchForEpisodeTitle();
 
-  bool IsValidVolumeNumber(const string_t& number);
-  bool SetVolumeNumber(const string_t& number, Token& token, bool validate);
+        void SearchForIsolatedNumbers();
 
-  size_t FindNumberInString(const string_t& str);
-  string_t GetNumberFromOrdinal(const string_t& word);
-  bool IsCrc32(const string_t& str);
-  bool IsDashCharacter(const string_t& str);
-  bool IsResolution(const string_t& str);
-  bool IsElementCategorySearchable(ElementCategory category);
-  bool IsElementCategorySingular(ElementCategory category);
+        void ValidateElements();
 
-  bool CheckAnimeSeasonKeyword(const token_iterator_t token);
-  bool CheckExtentKeyword(ElementCategory category,
-                          const token_iterator_t token);
+        bool SearchForEpisodePatterns(std::vector<size_t> &tokens);
 
-  void BuildElement(ElementCategory category, bool keep_delimiters,
-                    const token_iterator_t token_begin,
-                    const token_iterator_t token_end) const;
+        bool SearchForEquivalentNumbers(std::vector<size_t> &tokens);
 
-  bool CheckTokenCategory(const token_iterator_t token,
-                          TokenCategory category) const;
-  bool IsTokenIsolated(const token_iterator_t token) const;
+        bool SearchForIsolatedNumbers(std::vector<size_t> &tokens);
 
-  const int kAnimeYearMin = 1900;
-  const int kAnimeYearMax = 2050;
-  const int kEpisodeNumberMax = kAnimeYearMin - 1;
-  const int kVolumeNumberMax = 20;
+        bool SearchForSeparatedNumbers(std::vector<size_t> &tokens);
 
-  Elements& elements_;
-  const Options& options_;
-  token_container_t& tokens_;
+        bool SearchForLastNumber(std::vector<size_t> &tokens);
 
-  bool found_episode_keywords_ = false;
-};
+        bool NumberComesAfterPrefix(ElementCategory category, Token &token);
+
+        bool NumberComesBeforeAnotherNumber(const token_iterator_t token);
+
+        bool MatchEpisodePatterns(string_t word, Token &token);
+
+        bool MatchSingleEpisodePattern(const string_t &word, Token &token);
+
+        bool MatchMultiEpisodePattern(const string_t &word, Token &token);
+
+        bool MatchSeasonAndEpisodePattern(const string_t &word, Token &token);
+
+        bool MatchTypeAndEpisodePattern(const string_t &word, Token &token);
+
+        bool MatchFractionalEpisodePattern(const string_t &word, Token &token);
+
+        bool MatchPartialEpisodePattern(const string_t &word, Token &token);
+
+        bool MatchNumberSignPattern(const string_t &word, Token &token);
+
+        bool MatchJapaneseCounterPattern(const string_t &word, Token &token);
+
+        bool MatchVolumePatterns(string_t word, Token &token);
+
+        bool MatchSingleVolumePattern(const string_t &word, Token &token);
+
+        bool MatchMultiVolumePattern(const string_t &word, Token &token);
+
+        bool IsValidEpisodeNumber(const string_t &number);
+
+        bool SetEpisodeNumber(const string_t &number, Token &token, bool validate);
+
+        bool SetAlternativeEpisodeNumber(const string_t &number, Token &token);
+
+        bool IsValidVolumeNumber(const string_t &number);
+
+        bool SetVolumeNumber(const string_t &number, Token &token, bool validate);
+
+        size_t FindNumberInString(const string_t &str);
+
+        string_t GetNumberFromOrdinal(const string_t &word);
+
+        bool IsCrc32(const string_t &str);
+
+        bool IsDashCharacter(const string_t &str);
+
+        bool IsResolution(const string_t &str);
+
+        bool IsElementCategorySearchable(ElementCategory category);
+
+        bool IsElementCategorySingular(ElementCategory category);
+
+        bool CheckAnimeSeasonKeyword(const token_iterator_t token);
+
+        bool CheckExtentKeyword(ElementCategory category,
+                                const token_iterator_t token);
+
+        void BuildElement(ElementCategory category, bool keep_delimiters,
+                          const token_iterator_t token_begin,
+                          const token_iterator_t token_end) const;
+
+        bool CheckTokenCategory(const token_iterator_t token,
+                                TokenCategory category) const;
+
+        bool IsTokenIsolated(const token_iterator_t token) const;
+
+        const int kAnimeYearMin = 1900;
+        const int kAnimeYearMax = 2050;
+        const int kEpisodeNumberMax = kAnimeYearMin - 1;
+        const int kVolumeNumberMax = 20;
+
+        Elements &elements_;
+        const Options &options_;
+        token_container_t &tokens_;
+
+        bool found_episode_keywords_ = false;
+    };
 
 }  // namespace anitomy
